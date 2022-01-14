@@ -1,5 +1,4 @@
-\documentclass[journal,12pt,twocolumn]{IEEEtran}
-
+\documentclass{article}
 \usepackage{setspace}
 \usepackage{gensymb}
 
@@ -124,14 +123,10 @@ columns=fullflexible
 \vspace{3cm}
 \title{Assignment 1}
 \author{AVVARU BHARAT}
+\date{}
 \maketitle
-\newpage
-\bigskip
 \renewcommand\thefigure{\arabic{figure}}
 \setcounter{figure}{0}
-\begin{abstract}
-This document shows how to draw logic gates.
-\end{abstract}
 Download all latex-tikz codes from 
 %
 \begin{lstlisting}
@@ -142,34 +137,46 @@ https://github.com/Bharat437/EE5803-FPGA-LAB/tree/main/Assignment-1
 Draw the Logic Circuit for the following Boolean Expression:\\
 $\left(\vec{X}^{'}+\vec{Y}\right).\vec{Z}+\vec{W}^{'}$
 \section{Explanation}
-\begin{figure}[!h]
-\centering
-\resizebox {\columnwidth} {!} {
-\begin{tikzpicture}
-    \node (x) at (0.5, 2) {$X$};
-    \node (y) at (0, 1) {$Y$};
+First we will simplify the given Boolean expression as below, so that NAND or NOR logic gates are used for designing logic circuit.\\
+Using De Morgan's Law
+\begin{equation}
+\begin{split}
+    \left(\overline{X}+Y\right).Z+\overline{W}&=\left(\overline{X}+\overline{\overline{Y}}\right).Z+\overline{W}\\
+    &=\overline{X.\overline{Y}}.Z+\overline{W}\\
+    &=\left(\overline{\overline{\overline{X.\overline{Y}}.Z}}\right)+\overline{W}
+\end{split}
+\end{equation}
+\begin{equation}
+    \implies\left(\overline{X}+Y\right).Z+\overline{W}=\overline{\left(\overline{\overline{X.\overline{Y}}.Z}\right).W}
+\end{equation}
+Now we will draw logic circuit according to the above simplified expression.
+\begin{center}
+\begin{tikzpicture}[ circuit symbol wires]
+    \node (x) at (0,4.5) {$X$};
+    \node (y) at (0,3) {$Y$};
+    \node (z) at (0,1.5) {$Z$};
+    \node (w) at (0,0.5) {$W$};
     
+    \node[nand gate US, minimum size=32pt, draw, logic gate inputs=nn] at ($(x) + (4, -0.17)$) (nand2) {};
+    \node[nand gate US, minimum size=32pt, draw] at (1.5,3) (nand1) {};
     
-    \node[or gate US, draw, rotate=0, logic gate inputs=in] at ($(y) + (1.5, 0.085)$) (xory) {};
-     \draw (x) -- ([xshift=0.2cm]x) |- (xory.input 1);
-    \draw (y) -- ([xshift=0.2cm]y) |-(xory.input 2);
+    \draw (y.east) - ++(right:3mm) |- (nand1.input 1);
+    \draw (y.east) - ++(right:3mm) |- (nand1.input 2);
+    \draw (x) -- ([xshift=0.2cm]x) |- (nand2.input 1);
+    \draw (nand1.output) -- node[above]{$\overline{Y}$} ([xshift=0.5cm]nand1.output) |- (nand2.input 2);
     
-    \node (z) at (0,0) {$Z$};
+    \node[nand gate US, minimum size=32pt, draw, logic gate inputs=nn] at ($(z) + (6.5, 0.17)$) (nand3) {};
     
-    \node[and gate US, draw, rotate=0, logic gate inputs=nn] at ($(z) + (3, 0.085)$) (xyandz) {};
-    \draw (xory.output) -- ([xshift=0.2cm]xory.output) |- (xyandz.input 1);
-    \draw (z) -- ([xshift=0.2cm]z) |-(xyandz.input 2);
+    \draw (z) -- ([xshift=0.2cm]z) |- (nand3.input 2);
+    \draw (nand2.output) -- node[above]{$\overline{X.\overline{Y}}$} ([xshift=0.5cm]nand2.output) |- (nand3.input 1);
     
-    \node (w) at (0,-1) {$W$};
+    \node[nand gate US, minimum size=32pt, draw, logic gate inputs=nn] at ($(w) + (9, 0.17)$) (nand4) {};
     
-    \node[or gate US, draw, rotate=0, logic gate inputs=ni] at ($(w) + (4, 0.085)$) (or2) {};
-    \draw (xyandz.output) -- ([xshift=0.2cm]xyandz.output) |- (or2.input 1);
-    \draw (w) -- ([xshift=0.2cm]w) |-(or2.input 2);
+    \draw (w) -- ([xshift=0.2cm]w) |- (nand4.input 2);
+    \draw (nand3.output) -- node[above]{$\overline{\overline{X.\overline{Y}}.Z}$} ([xshift=0.5cm]nand3.output) |- (nand4.input 1);
     
-    \draw (or2.output) -- node[above]{$\left(\vec{X}^{'}+\vec{Y}\right).\vec{Z}+\vec{W}^{'}$} ($(or2) + (4, 0)$);
+    \draw (nand4.output) -- node[above]{$\overline{\left(\overline{\overline{X.\overline{Y}}.Z}\right).W}$} ($(nand4) + (4, 0)$);
 \end{tikzpicture}
-}
-\caption{Logic circuit for $\left(\vec{X}^{'}+\vec{Y}\right).\vec{Z}+\vec{W}^{'}$}
-\label{ckt1}
-\end{figure}
+\end{center}
+
 \end{document}
