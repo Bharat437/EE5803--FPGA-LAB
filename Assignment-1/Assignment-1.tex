@@ -150,6 +150,7 @@ Using De Morgan's Law
     \implies\left(\overline{X}+Y\right).Z+\overline{W}=\overline{\left(\overline{\overline{X.\overline{Y}}.Z}\right).W}
 \end{equation}
 Now we will draw logic circuit according to the above simplified expression.
+\begin{figure}
 \begin{center}
 \begin{tikzpicture}[ circuit symbol wires]
     \node (x) at (0,4.5) {$X$};
@@ -178,5 +179,35 @@ Now we will draw logic circuit according to the above simplified expression.
     \draw (nand4.output) -- node[above]{$\overline{\left(\overline{\overline{X.\overline{Y}}.Z}\right).W}$} ($(nand4) + (4, 0)$);
 \end{tikzpicture}
 \end{center}
+\caption{Logic circuit using NAND gate}
+\label{ckt1}
+\end{figure}
 
+\begin{table} [h!]
+    \centering
+    \begin{tabular}{ | c | c | c | c | c | }
+    \hline
+    X & Y & Z & W & Output \\
+    \hline
+    0 & 0 & 0 & 0 &  1\\
+    0 & 0 & 0 & 1 &  0\\
+    0 & 0 & 1 & 0 &  1\\
+    0 & 0 & 1 & 1 &  1\\
+    0 & 1 & 0 & 0 &  1\\
+    0 & 1 & 0 & 1 &  0\\
+    0 & 1 & 1 & 0 &  1\\
+    0 & 1 & 1 & 1 &  1\\
+    1 & 0 & 0 & 0 &  1\\
+    1 & 0 & 0 & 1 &  0\\
+    1 & 0 & 1 & 0 &  1\\
+    1 & 0 & 1 & 1 &  0\\
+    1 & 1 & 0 & 0 &  1\\
+    1 & 1 & 0 & 1 &  0\\
+    1 & 1 & 1 & 0 &  1\\
+    1 & 1 & 1 & 1 &  1\\
+     \hline
+\end{tabular}
+\caption{Truth table of above Logic circuit}
+\label{Table1}
+\end{table}
 \end{document}
