@@ -166,7 +166,12 @@ For example the given truth table is as below\\\\\\\\\\\\\\\\\\\\
 \label{Table1}
 \end{table}
 \newline
-From truth table, the min terms for which $G=1$ are 2$\left(\overline{X}.Y.\overline{Z}\right)$, 4$\left(X.\overline{Y}.\overline{Z}\right)$, 5$\left(X.\overline{Y}.Z\right)$, 7$\left(X.Y.Z\right)$.\\
+From truth table, the min terms for which $G=1$ are
+\begin{equation}
+\begin{split}
+    2\implies010\implies\left(\overline{X}.Y.\overline{Z}\right)\\ 4\implies100\implies\left(X.\overline{Y}.\overline{Z}\right)\\ 5\implies101\implies\left(X.\overline{Y}.Z\right)\\ 7\implies111\implies\left(X.Y.Z\right)\\
+\end{split}
+\end{equation}\\
 Now we can draw the logic circuit using NAND gates as below.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 \begin{figure}[h!]
     \centering
